@@ -1,6 +1,6 @@
 ---
 name: Dev-Log
-about: Suggest an idea for this project
+about: "[Dev Log] 2022XXXX / 작성자"
 title: ''
 labels: ''
 assignees: ''
