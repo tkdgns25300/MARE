@@ -1,7 +1,7 @@
 ---
 name: Issue Task Card
-about: "[Task] 태스크 내용"
-title: ''
+about: "[TASK] 태스크 내용"
+title: "[TASK] 태스크 내용"
 labels: ''
 assignees: ''
 
