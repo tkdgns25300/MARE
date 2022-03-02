@@ -9,7 +9,7 @@ assignees: ''
 
 ISSUE
 
-- Group: 
+- Group:  client or server
 - Type: 
 - Detail:
 
@@ -19,13 +19,4 @@ TODO
 -[ ] Job3
 
 Estimated time
-- Pick one
-
-ex) 1H
-
-Labels
-
-- Estimated time: E: 1h
-- Group : client, server
-- Sprint: Sprint__NUMBER__
-- Urgency: High, Middle, Low
+-  ex) 1H
