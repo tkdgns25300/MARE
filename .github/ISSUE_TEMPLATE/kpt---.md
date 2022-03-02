@@ -1,6 +1,6 @@
 ---
 name: KPT 회고
-about: Suggest an idea for this project
+about: "[KPT] -주차 회고"
 title: ''
 labels: ''
 assignees: ''
