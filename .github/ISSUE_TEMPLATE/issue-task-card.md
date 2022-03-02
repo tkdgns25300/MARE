@@ -14,9 +14,11 @@ ISSUE
 - Detail:
 
 TODO
+
 -[ ] Job1
 -[ ] Job2
 -[ ] Job3
 
 Estimated time
+
 -  ex) 1H
