@@ -22,3 +22,9 @@ TODO
 Estimated time
 
 -  ex) 1H
+
+Labels
+
+- Group : client, server
+- Sprint: Sprint__NUMBER__
+- Urgency: High, Middle, Low
