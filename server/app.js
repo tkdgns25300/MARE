@@ -14,9 +14,6 @@ app.use(express.json());
 
 
 // routes
-app.use('/', (req, res) => {
-    res.send('Hello WaaT!');
-})
 app.use('/user', userRouter);
 app.use('/recipe', recipeRouter);
 
