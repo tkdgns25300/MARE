@@ -13,6 +13,7 @@ router.patch('/', controllers.patch);
 router.delete('/', controllers.delete);
 */
 router.post('/signup', controllers.signup);
+router.post('/login', controllers.login);
 
 
 module.exports = router;
