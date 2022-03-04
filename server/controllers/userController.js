@@ -114,6 +114,47 @@ const getInfo = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
             res.status(400).json({
+                data: null,
+                message: "fail : require token"
+            })
+        } else {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const data = verifyToken(accessToken);
+            if (data === 'fail') { // 유효하지 않은 token일 경우
+                res.status(400).json({
+                    data: null,
+                    message: "fail : invalid token"
+                })
+            } else {
+                const userInfo = await User.findOne({ _id: data.id });
+                const { _id, nickname, email, createdAt } = userInfo;
+                res.status(200).json({
+                    data: {
+                        userInfo: {
+                            _id,
+                            nickname,
+                            email,
+                            createdAt,
+                        }
+                    },
+                    message: "success"
+                })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            data: null,
+            message: error
+        });
+    }
+}
+
+
+// 회원정보 업데이트
+const updateInfo = async (req, res) => {
+    try {
+        if (!req.headers.authorization) { // token이 전달되지 않았을 경우
+            res.status(400).json({
                 message: "fail : require token"
             })
         } else {
@@ -124,14 +165,18 @@ const getInfo = async (req, res) => {
                     message: "fail : invalid token"
                 })
             } else {
-                const userInfo = await User.findOne({ _id: data.id });
-                const { _id, nickname, email, createdAt } = userInfo;
-                res.status(200).json({
-                    _id,
-                    nickname,
-                    email,
-                    createdAt,
-                })
+                if (Object.keys(req.body).length === 0) { // nickname, email 둘 다 request에 없을 경우
+                    res.status(400).json({
+                        message: "fail : require nickname or email"
+                    })
+                } else {
+                    await User.findOneAndUpdate({ _id: data.id }, req.body, {
+                        runValidators: true
+                    })
+                    res.status(200).json({
+                        message: "success"
+                    })
+                }
             }
         }
     } catch (error) {
@@ -140,6 +185,45 @@ const getInfo = async (req, res) => {
 }
 
 
+// 패스워드 확인
+const checkPassword = async (req, res) => {
+    try {
+        if (!req.headers.authorization) { // token이 전달되지 않았을 경우
+            res.status(400).json({
+                message: "fail : require token"
+            })
+        } else {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const data = verifyToken(accessToken);
+            if (data === 'fail') { // 유효하지 않은 token일 경우
+                res.status(400).json({
+                    message: "fail : invalid token"
+                })
+            } else {
+                const { password } = req.body;
+                if (!password) {
+                    res.status(400).json({ // password가 전달되지 않았을 경우
+                        message: "fail : require password"
+                    })
+                } else {
+                    const userInfo = await User.findOne({ _id: data.id, password: password });
+                    if (!userInfo) {
+                        res.status(400).json({ // 유효하지 않은 password일 경우
+                            message: "fail : invalid password"
+                        })
+                    } else {
+                        res.status(200).json({
+                            message: "success : valid password"
+                        })
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
 
 module.exports = {
     signup,
@@ -147,5 +231,7 @@ module.exports = {
     login,
     logout,
     getInfo,
+    updateInfo,
+    checkPassword
 };
 
