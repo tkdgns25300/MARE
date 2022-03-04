@@ -16,7 +16,7 @@ const serverPath = process.env.REACT_APP_SERVER_PATH
 
 // !! CSS 리셋하는 것 공지!!!!!!!
 
-const SignIn = () => {
+const Signup = () => {
 
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
@@ -36,7 +36,7 @@ const SignIn = () => {
   }, [isNotUsingEmail, isNotUsingNickname, password, checkPassword])
 
   function validateEmail(email) {
-    // 이메일 유효성 검사()
+    // 이메일 유효성 검사(스택 오버플로)
     const re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
   }
@@ -48,29 +48,28 @@ const SignIn = () => {
 
   const emailValidateCheck = async () => {
     // 이메일의 중복여부를 API를 이용하여 확인한다.
-    // const res = await axios.post(`${serverPath}/user/check-email`, {
-    //   "email": email
-    // })
+    const res = await axios.post(`${serverPath}/user/check-email`, {
+      "email": email
+    })
 
-    // if (res.status === 200) {
+    if (res.status === 200) {
       setisNotUsingEmail(true)
-    // } else {
-    //   setisNotUsingEmail(false)
-    // }
+    } else {
+      setisNotUsingEmail(false)
+    }
   }
   const nicknameValidateCheck = async () => {
     // 닉네임의 중복여부를 API를 이용하여 확인한다.
-    // const res = await axios.post(`${serverPath}/user/check-nickname`, {
-    //   "nickname": nickname
-    // })
+    const res = await axios.post(`${serverPath}/user/check-nickname`, {
+      "nickname": nickname
+    })
 
-    // if (res.status === 200) {
+    if (res.status === 200) {
       setisNotUsingNickname(true)
-    // } else {
-    //   setisNotUsingNickname(false)
-    // }
+    } else {
+      setisNotUsingNickname(false)
+    }
   }
-  // ! 위의 이메일, 닉네임 중복검사 함수는 임의로 작동 확인하기 위해 클릭만 하면 무조건 중복확인을 ok 로 해둠.
 
   const signinHandler = async () => {
     // 작성된 내용을 요청의 바디로 전달한다.
@@ -164,4 +163,4 @@ const SignIn = () => {
   )
 }
 
-export default SignIn
+export default Signup
