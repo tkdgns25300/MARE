@@ -26,6 +26,7 @@ const login = async (req, res) => {
                 const accessToken = generateToken(userInfo);
                 res.cookie('accessToken', accessToken, {
                     httpOnly: true,
+                    maxAge: 60 * 60 * 24,
                     // domain :
                 })
                 res.status(200).json({ message: "success" });
