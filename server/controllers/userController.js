@@ -175,6 +175,46 @@ const updateInfo = async (req, res) => {
 }
 
 
+// 패스워드 확인
+const checkPassword = async (req, res) => {
+    try {
+        if (!req.headers.authorization) { // token이 전달되지 않았을 경우
+            res.status(400).json({
+                message: "fail : require token"
+            })
+        } else {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const data = verifyToken(accessToken);
+            if (data === 'fail') { // 유효하지 않은 token일 경우
+                res.status(400).json({
+                    message: "fail : invalid token"
+                })
+            } else {
+                const { password } = req.body;
+                if (!password) {
+                    res.status(400).json({ // password가 전달되지 않았을 경우
+                        message: "fail : require password"
+                    })
+                } else {
+                    const userInfo = await User.findOne({ _id: data.id, password: password });
+                    if (!userInfo) {
+                        res.status(400).json({ // 유효하지 않은 password일 경우
+                            message: "fail : invalid password"
+                        })
+                    } else {
+                        res.status(200).json({
+                            message: "success : valid password"
+                        })
+                    }
+                }                
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
+
 module.exports = {
     signup,
     signout,
@@ -182,5 +222,6 @@ module.exports = {
     logout,
     getInfo,
     updateInfo,
+    checkPassword
 };
 
