@@ -108,11 +108,44 @@ const logout = async (req, res) => {
     }
 }
 
+
+// 회원 정보
+const getInfo = async (req, res) => {
+    try {
+        if (!req.headers.authorization) { // token이 전달되지 않았을 경우
+            res.status(400).json({
+                message: "fail : require token"
+            })
+        } else {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const data = verifyToken(accessToken);
+            if (data === 'fail') { // 유효하지 않은 token일 경우
+                res.status(400).json({
+                    message: "fail : invalid token"
+                })
+            } else {
+                const userInfo = await User.findOne({ _id: data.id });
+                const { _id, nickname, email, createdAt } = userInfo;
+                res.status(200).json({
+                    _id,
+                    nickname,
+                    email,
+                    createdAt,
+                })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
+
+
 module.exports = {
     signup,
     signout,
     login,
     logout,
+    getInfo,
 };
 
-//test

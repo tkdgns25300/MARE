@@ -16,6 +16,7 @@ router.post('/signup', controllers.signup);
 router.delete('/signout', controllers.signout);
 router.post('/login', controllers.login);
 router.post('/logout', controllers.logout);
+router.get('/info', controllers.getInfo);
 
 
 module.exports = router;
