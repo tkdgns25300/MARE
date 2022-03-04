@@ -73,7 +73,7 @@ const Signup = () => {
 
   const signinHandler = async () => {
     // 작성된 내용을 요청의 바디로 전달한다.
-    const res = axios.post(`${serverPath}/signup`, {
+    const res = axios.post(`${serverPath}/user/signup`, {
       "email": email,
       "nickname": nickname,
       "password": password
