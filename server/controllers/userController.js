@@ -114,6 +114,7 @@ const getInfo = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
             res.status(400).json({
+                data: null,
                 message: "fail : require token"
             })
         } else {
@@ -121,27 +122,36 @@ const getInfo = async (req, res) => {
             const data = verifyToken(accessToken);
             if (data === 'fail') { // 유효하지 않은 token일 경우
                 res.status(400).json({
+                    data: null,
                     message: "fail : invalid token"
                 })
             } else {
                 const userInfo = await User.findOne({ _id: data.id });
                 const { _id, nickname, email, createdAt } = userInfo;
                 res.status(200).json({
-                    _id,
-                    nickname,
-                    email,
-                    createdAt,
+                    data: {
+                        userInfo: {
+                            _id,
+                            nickname,
+                            email,
+                            createdAt,
+                        }
+                    },
+                    message: "success"
                 })
             }
         }
     } catch (error) {
-        res.status(500).json({ message: error });
+        res.status(500).json({
+            data: null,
+            message: error
+        });
     }
 }
 
 
 // 회원정보 업데이트
-const updateInfo = async (req, res) => {                
+const updateInfo = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
             res.status(400).json({
@@ -206,7 +216,7 @@ const checkPassword = async (req, res) => {
                             message: "success : valid password"
                         })
                     }
-                }                
+                }
             }
         }
     } catch (error) {
