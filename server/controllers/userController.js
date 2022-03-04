@@ -140,6 +140,40 @@ const getInfo = async (req, res) => {
 }
 
 
+// 회원정보 업데이트
+const updateInfo = async (req, res) => {                
+    try {
+        if (!req.headers.authorization) { // token이 전달되지 않았을 경우
+            res.status(400).json({
+                message: "fail : require token"
+            })
+        } else {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const data = verifyToken(accessToken);
+            if (data === 'fail') { // 유효하지 않은 token일 경우
+                res.status(400).json({
+                    message: "fail : invalid token"
+                })
+            } else {
+                if (Object.keys(req.body).length === 0) { // nickname, email 둘 다 request에 없을 경우
+                    res.status(400).json({
+                        message: "fail : require nickname or email"
+                    })
+                } else {
+                    await User.findOneAndUpdate({ _id: data.id }, req.body, {
+                        runValidators: true
+                    })
+                    res.status(200).json({
+                        message: "success"
+                    })
+                }
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
 
 module.exports = {
     signup,
@@ -147,5 +181,6 @@ module.exports = {
     login,
     logout,
     getInfo,
+    updateInfo,
 };
 
