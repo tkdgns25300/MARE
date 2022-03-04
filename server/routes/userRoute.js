@@ -13,6 +13,7 @@ router.patch('/', controllers.patch);
 router.delete('/', controllers.delete);
 */
 router.post('/signup', controllers.signup);
+router.delete('/signout', controllers.signout);
 router.post('/login', controllers.login);
 router.post('/logout', controllers.logout);
 
