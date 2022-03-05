@@ -225,6 +225,33 @@ const checkPassword = async (req, res) => {
 }
 
 
+// 닉네임 확인
+const checkNickname = async (req, res) => {
+    try {
+        const { nickname } = req.body;
+        if (!nickname) {
+            res.status(400).json({ // nickname이 전달되지 않았을 경우
+                message: "fail : require nickname"
+            })
+        } else {
+            const userInfo = await User.findOne({ nickname });
+            if (userInfo) {
+                res.status(400).json({ // nickname이 중복되는 경우
+                    message: "fail : invalid nickname"
+                })
+            } else {
+                res.status(200).json({
+                    message: "success : valid nickname"
+                })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
+
+
 module.exports = {
     signup,
     signout,
@@ -232,5 +259,6 @@ module.exports = {
     logout,
     getData,
     updateData,
-    checkPassword
+    checkPassword,
+    checkNickname,
 };

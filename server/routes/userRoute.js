@@ -19,6 +19,7 @@ router.post('/logout', controllers.logout);
 router.get('/data', controllers.getData);
 router.patch('/data', controllers.updateData);
 router.post('/password', controllers.checkPassword);
+router.post('/nickname', controllers.checkNickname);
 
 
 module.exports = router;
