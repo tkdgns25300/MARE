@@ -251,6 +251,31 @@ const checkNickname = async (req, res) => {
 }
 
 
+// 이메일 확인
+const checkEmail = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            res.status(400).json({ // email이 전달되지 않았을 경우
+                message: "fail : require email"
+            })
+        } else {
+            const userInfo = await User.findOne({ email });
+            if (userInfo) {
+                res.status(400).json({ // email이 중복되는 경우
+                    message: "fail : invalid email"
+                })
+            } else {
+                res.status(200).json({
+                    message: "success : valid email"
+                })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+}
+
 
 module.exports = {
     signup,
@@ -261,4 +286,5 @@ module.exports = {
     updateData,
     checkPassword,
     checkNickname,
+    checkEmail,
 };

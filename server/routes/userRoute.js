@@ -20,6 +20,7 @@ router.get('/data', controllers.getData);
 router.patch('/data', controllers.updateData);
 router.post('/password', controllers.checkPassword);
 router.post('/nickname', controllers.checkNickname);
+router.post('/email', controllers.checkEmail);
 
 
 module.exports = router;
