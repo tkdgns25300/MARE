@@ -16,9 +16,9 @@ router.post('/signup', controllers.signup);
 router.delete('/signout', controllers.signout);
 router.post('/login', controllers.login);
 router.post('/logout', controllers.logout);
-router.get('/info', controllers.getInfo);
-router.patch('/update', controllers.updateInfo);
-router.post('/check-password', controllers.checkPassword);
+router.get('/data', controllers.getData);
+router.patch('/data', controllers.updateData);
+router.post('/password', controllers.checkPassword);
 
 
 module.exports = router;

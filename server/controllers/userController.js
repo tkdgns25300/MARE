@@ -23,14 +23,14 @@ const signup = async (req, res) => {
 const signout = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
-            res.status(400).json({
+            res.status(401).json({
                 message: "fail : require token"
             })
         } else {
             const accessToken = req.headers.authorization.split(' ')[1];
             const data = verifyToken(accessToken);
             if (data === 'fail') { // 유효하지 않은 token일 경우
-                res.status(400).json({
+                res.status(401).json({
                     message: "fail : invalid token"
                 })
             } else {
@@ -86,14 +86,14 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
-            res.status(400).json({
+            res.status(401).json({
                 message: "fail : require token"
             })
         } else {
             const accessToken = req.headers.authorization.split(' ')[1];
             const data = verifyToken(accessToken);
             if (data === 'fail') { // 유효하지 않은 token일 경우
-                res.status(400).json({
+                res.status(401).json({
                     message: "fail : invalid token"
                 })
             } else {
@@ -110,10 +110,10 @@ const logout = async (req, res) => {
 
 
 // 회원 정보
-const getInfo = async (req, res) => {
+const getData = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
-            res.status(400).json({
+            res.status(401).json({
                 data: null,
                 message: "fail : require token"
             })
@@ -121,7 +121,7 @@ const getInfo = async (req, res) => {
             const accessToken = req.headers.authorization.split(' ')[1];
             const data = verifyToken(accessToken);
             if (data === 'fail') { // 유효하지 않은 token일 경우
-                res.status(400).json({
+                res.status(401).json({
                     data: null,
                     message: "fail : invalid token"
                 })
@@ -151,17 +151,17 @@ const getInfo = async (req, res) => {
 
 
 // 회원정보 업데이트
-const updateInfo = async (req, res) => {
+const updateData = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
-            res.status(400).json({
+            res.status(401).json({
                 message: "fail : require token"
             })
         } else {
             const accessToken = req.headers.authorization.split(' ')[1];
             const data = verifyToken(accessToken);
             if (data === 'fail') { // 유효하지 않은 token일 경우
-                res.status(400).json({
+                res.status(401).json({
                     message: "fail : invalid token"
                 })
             } else {
@@ -189,14 +189,14 @@ const updateInfo = async (req, res) => {
 const checkPassword = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
-            res.status(400).json({
+            res.status(401).json({
                 message: "fail : require token"
             })
         } else {
             const accessToken = req.headers.authorization.split(' ')[1];
             const data = verifyToken(accessToken);
             if (data === 'fail') { // 유효하지 않은 token일 경우
-                res.status(400).json({
+                res.status(401).json({
                     message: "fail : invalid token"
                 })
             } else {
@@ -230,8 +230,7 @@ module.exports = {
     signout,
     login,
     logout,
-    getInfo,
-    updateInfo,
+    getData,
+    updateData,
     checkPassword
 };
-
