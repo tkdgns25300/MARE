@@ -12,6 +12,7 @@ router.post('/', controllers.post);
 router.patch('/', controllers.patch);
 router.delete('/', controllers.delete);
 */
+router.post('/content', controllers.uploadRecipe);
 
 
 module.exports = router;
