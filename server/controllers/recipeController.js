@@ -164,10 +164,43 @@ const modifyRecipe = async (req, res) => {
 }
 
 
+// 레시피 즐겨찾기 등록
+const bookmarkRecipe = async (req, res) => {
+    try {
+        const { id } = req.body;
+        if (!id) { // id가 전달되지 않았을 경우
+            res.status(400).json({
+                message: "fail : require recipe's id"
+            })
+        } else {
+            const recipe = await Recipe.findOne({ _id : id });
+            if (!recipe) { // id가 유효하지 않을 경우
+                res.status(400).json({ 
+                    message: "fail : invalid recipe's id"
+                })
+            } else {
+                const newBookmark = recipe.bookmark === true ? false : true;
+                await Recipe.updateOne({ _id: id }, { bookmark: newBookmark }, {
+                    runValidators: true
+                })
+                res.status(200).json({
+                    message: "success"
+                })
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        });
+    }
+}
+
+
 
 module.exports = {
     uploadRecipe,
     getRecipe,
     deleteRecipe,
     modifyRecipe,
+    bookmarkRecipe
 };
