@@ -13,6 +13,7 @@ router.patch('/', controllers.patch);
 router.delete('/', controllers.delete);
 */
 router.post('/content', controllers.uploadRecipe);
+router.get('/content', controllers.getRecipe);
 
 
 module.exports = router;
