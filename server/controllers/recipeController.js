@@ -76,7 +76,52 @@ const getRecipe = async (req, res) => {
 }
 
 
+// 레시피 삭제
+const deleteRecipe = async (req, res) => {
+    try {
+        if (!req.headers.authorization) { // token이 전달되지 않았을 경우
+            res.status(401).json({
+                message: "fail : require token"
+            })
+        } else {
+            const accessToken = req.headers.authorization.split(' ')[1];
+            const data = verifyToken(accessToken);
+            if (data === 'fail') { // 유효하지 않은 token일 경우
+                res.status(401).json({
+                    message: "fail : invalid token"
+                })
+            } else {
+                const { id } = req.body;
+                if (!id) { // id가 전달되지 않았을 경우
+                    res.status(400).json({
+                        message: "fail : require recipe's id"
+                    })
+                } else {
+                    const recipe = await Recipe.findOne({ _id : id });
+                    if (!recipe) { // id가 유효하지 않을 경우
+                        res.status(400).json({ 
+                            message: "fail : invalid recipe's id"
+                        })
+                    } else {
+                        await Recipe.deleteOne({ _id: id });
+                        res.status(200).json({
+                            message: "success"
+                        })
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        res.status(500).json({
+            message: error
+        });
+    }
+}
+
+
+
 module.exports = {
     uploadRecipe,
-    getRecipe
+    getRecipe,
+    deleteRecipe,
 };
