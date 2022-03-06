@@ -15,6 +15,7 @@ router.delete('/', controllers.delete);
 router.post('/content', controllers.uploadRecipe);
 router.get('/content', controllers.getRecipe);
 router.delete('/content', controllers.deleteRecipe);
+router.patch('/content', controllers.modifyRecipe);
 
 
 module.exports = router;
