@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 
 // routes
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 app.use('/recipe', recipeRouter);
 
 
