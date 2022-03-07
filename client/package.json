@@ -20,6 +20,7 @@
     "reset-css": "^5.0.1",
     "styled-components": "^5.3.3",
     "styled-reset": "^4.3.4",
+    "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },
   "resolutions": {
