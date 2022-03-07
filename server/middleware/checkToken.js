@@ -1,6 +1,5 @@
 const verifyToken = require('../utils/verifyToken');
 
-
 const checkToken = async (req, res, next) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
