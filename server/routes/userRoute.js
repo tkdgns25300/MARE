@@ -4,21 +4,16 @@ const router = express.Router();
 // middleware
 const controllers = require('../controllers/userController');
 
-/*
- ----------------- TEMPLATE -----------------
-router.get('/', controllers.get);
-router.get('/:id', controllers.getId);
-router.post('/', controllers.post);
-router.patch('/', controllers.patch);
-router.delete('/', controllers.delete);
-*/
+// route
 router.post('/signup', controllers.signup);
 router.delete('/signout', controllers.signout);
 router.post('/login', controllers.login);
 router.post('/logout', controllers.logout);
-router.get('/info', controllers.getInfo);
-router.patch('/update', controllers.updateInfo);
-router.post('/check-password', controllers.checkPassword);
+router.get('/data', controllers.getData);
+router.patch('/data', controllers.updateData);
+router.post('/password', controllers.checkPassword);
+router.post('/nickname', controllers.checkNickname);
+router.post('/email', controllers.checkEmail);
 
 
 module.exports = router;

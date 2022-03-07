@@ -4,14 +4,12 @@ const router = express.Router();
 // middleware
 const controllers = require('../controllers/recipeController');
 
-/*
- ----------------- TEMPLATE -----------------
-router.get('/', controllers.get);
-router.get('/:id', controllers.getId);
-router.post('/', controllers.post);
-router.patch('/', controllers.patch);
-router.delete('/', controllers.delete);
-*/
+// route
+router.post('/content', controllers.uploadRecipe);
+router.get('/content', controllers.getRecipe);
+router.delete('/content', controllers.deleteRecipe);
+router.patch('/content', controllers.modifyRecipe);
+router.post('/bookmark', controllers.bookmarkRecipe);
 
 
 module.exports = router;

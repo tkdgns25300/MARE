@@ -7,6 +7,7 @@ const userRouter = require('./routes/userRoute');
 const recipeRouter = require('./routes/recipeRoute');
 const app = express();
 const PORT = process.env.PORT || 80;
+const notFound = require('./middleware/notFound');
 
 
 // middleware
@@ -16,8 +17,9 @@ app.use(cookieParser());
 
 
 // routes
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 app.use('/recipe', recipeRouter);
+app.use(notFound);
 
 
 // Start Server
