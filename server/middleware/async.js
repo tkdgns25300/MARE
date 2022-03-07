@@ -3,7 +3,9 @@ const asyncWrapper = (fn) => {
         try {
             await fn(req, res, next);
         } catch (error) {
-            res.status(500).send(error);
+            res.status(500).json({
+                message: "Somgthing weng wrong, please try again"
+            });
         }
     }
 }
