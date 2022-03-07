@@ -34,11 +34,11 @@ export const Navbar = () => {
       </MenuBtn>
       <MenuBtn>
         <SLink to="favorites">
-          <FontAwesomeIcon icon={faSquarePlus} size="2x" />즐겨찾기</SLink>
+          <FontAwesomeIcon icon={faStar} size="2x" />즐겨찾기</SLink>
       </MenuBtn>
       <MenuBtn>
         <SLink to="add_recipe">
-          <FontAwesomeIcon icon={faStar} size="2x" />레피시 추가</SLink>
+          <FontAwesomeIcon icon={faSquarePlus} size="2x" />레피시 추가</SLink>
       </MenuBtn>
       <MenuBtn>
         <SLink to="mypage">

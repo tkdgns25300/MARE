@@ -4,6 +4,9 @@ import { Routes, Route } from 'react-router-dom';
 import { Reset } from 'styled-reset'
 import Signup from './Pages/signup';
 import { Navbar } from './Components/navbar';
+import { AddIngredients } from './Components/addIngredients';
+import { AddRecipe } from './Pages/add_recipe';
+
 
 // 각 페이지 별 path
 
@@ -23,6 +26,7 @@ function App() {
       <div>hello world</div>
       <Routes>
         <Route path="signup" element={<Signup />} />
+        <Route path="add_recipe" element={<AddRecipe />} />
       </Routes>
       <Navbar />
     </div>
