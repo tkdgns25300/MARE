@@ -119,7 +119,7 @@ const deleteRecipe = async (req, res) => {
 }
 
 
-// 레시피 삭제
+// 레시피 업데이트
 const modifyRecipe = async (req, res) => {
     try {
         if (!req.headers.authorization) { // token이 전달되지 않았을 경우
