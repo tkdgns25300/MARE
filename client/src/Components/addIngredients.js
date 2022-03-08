@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { v4 as uuidv4 } from "uuid"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -10,20 +10,21 @@ const Container = styled.div`
     display: grid ;
     place-items: center;
     background-color: beige;
-    width: max-content;
+    box-sizing: border-box;
+    width: 400px;
     padding: 5px;
   `
 
 const ILists = styled.div`
     display: flex;
-    width: 100%;
+    width: 400px;
     justify-content: center ;
   `
 
 const IListsItems = styled.div`
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 100px;
   `
 
 const Sinput = styled.input`
@@ -31,6 +32,7 @@ const Sinput = styled.input`
   `
 
 const SFontAwesomeIcon = styled(FontAwesomeIcon)`
+  display: inline-block ;
   color: black;
   cursor: pointer;
 `
@@ -38,9 +40,11 @@ const SFontAwesomeIcon = styled(FontAwesomeIcon)`
 // Component
 
 // 재료 작성 폼
-const IngredientForms = ({ handleAllIngredients }) => {
+const IngredientForms = ({ allIngredients, setAllIngredients }) => {
+  
   const [ingredient, setIngredient] = useState('')
   const [amounts, setAmounts] = useState('')
+
 
   const handleIngredient = (e) => {
     setIngredient(e.target.value)
@@ -56,6 +60,18 @@ const IngredientForms = ({ handleAllIngredients }) => {
     setIngredient('')
     setAmounts('')
   }
+
+  const handleAllIngredients = (name, amounts) => {
+    let data = {
+      id: uuidv4(),
+      name: name,
+      amounts: amounts
+    }
+    setAllIngredients(
+      [...allIngredients, data]
+    )
+  }
+
   return (
     <div>
       <Sinput className="ingredient_input" type="text" placeholder="재료 이름을 입력하세요." onChange={handleIngredient} value={ingredient} />
@@ -88,20 +104,12 @@ const ShowIngredients = ({ data, allIngredients, setAllIngredients }) => {
 }
 
 // Render
-
-export const AddIngredients = () => {
+export const AddIngredients = ( { updateIngre } ) => {
   const [allIngredients, setAllIngredients] = useState([])
 
-  const handleAllIngredients = (name, amounts) => {
-    let data = {
-      id: uuidv4(),
-      name: name,
-      amounts: amounts
-    }
-    setAllIngredients(
-      [...allIngredients, data]
-    )
-  }
+  useEffect(() => {
+    updateIngre(allIngredients)
+  }, [allIngredients])
 
   return (
     <Container>
@@ -109,7 +117,7 @@ export const AddIngredients = () => {
       {allIngredients.map((data) => {
         return <ShowIngredients key={data.id} data={data} allIngredients={allIngredients} setAllIngredients={setAllIngredients} />
       })}
-      <IngredientForms handleAllIngredients={handleAllIngredients} />
+      <IngredientForms allIngredients={allIngredients} setAllIngredients={setAllIngredients}/>
 
     </Container>
   )
