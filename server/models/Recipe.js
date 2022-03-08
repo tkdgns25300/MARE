@@ -12,7 +12,7 @@ const RecipeSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        // default: "추후 프론트에서 주신 default URL 업로드"
+        default: "https://i.ibb.co/nfq39b4/cutting-board-g299e1b556-1920.jpg",
     },
     ingredient: {
         type: mongoose.Schema.Types.Mixed,
