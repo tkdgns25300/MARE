@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
+import { Topbar } from "../Components/topbar";
+
 
 const serverPath = process.env.REACT_APP_SERVER_PATH
 
@@ -15,6 +17,7 @@ const Container = styled.div`
   background-color: beige;
 `
 const RecipeImg = styled.div`
+  position : relative;
   display: grid;
   place-items: center;
   width: 400px;
@@ -92,7 +95,7 @@ export const RecipeDetails = () => {
       { id: "ac33d74d-a130-4e4b-869b-e98ff5b5ca7c", name: "고추가루", amounts: "2스푼" },
       { id: "b1305fd8-2665-4858-9afa-be9e109a46ca", name: "설탕", amounts: "2스푼" },
     ],
-    contents: "소금을 넣고 고추장을 넣는다 아아아ㅏ",
+    contents: "소금을 넣고 고추장을 넣는다 \n 아아아ㅏ",
     bookmark: true,
     createdAt: "2022 - 03 - 06T08: 03: 52.567Z,__v: 0"
   }
@@ -118,7 +121,7 @@ export const RecipeDetails = () => {
     })
 
     if (res.status === 200) {
-      setIsBookmarked(!isBookmarked) 
+      setIsBookmarked(!isBookmarked)
       // 정상적으로 변경됐다고 알려주면 상태 Boolean 토글 -> 보여지는 이미지만을 위해서 만든 상태
       // 서버 내부에서는 서버 로직에 따라 토글됨.
     }
@@ -126,33 +129,38 @@ export const RecipeDetails = () => {
 
 
 
+
   return (
+
     <Container>
+      <Topbar pageTitle='레시피 상세' />
       {/* 썸네일 */}
-      <RecipeImg bg={photo} />
+      <RecipeImg bg={photo}>
+        <BookmarkBtn icon={faHeart} size="2x" onClick={toggleBookmark} bookmarked={isBookmarked ? "true" : ""} />
+        </RecipeImg>
 
-      {/* 북마크 버튼 */}
-      <BookmarkBtn icon={faHeart} size="2x" onClick={toggleBookmark} bookmarked={isBookmarked ? "true" : ""} />
+        {/* 북마크 버튼 */}
 
-      {/* 제목 표시 */}
-      <RecipeTitle>{title}</RecipeTitle>
 
-      <Title>필요 재료</Title>
-      {/* 재료 표시 */}
-      {
-        ingredients.map((el) => {
-          return (
-            <ILists key={el.id}>
-              <IListsItems>{el.name}</IListsItems>
-              <IListsItems>{el.amounts}</IListsItems>
-            </ILists>
-          )
-        })
-      }
+        {/* 제목 표시 */}
+        <RecipeTitle>{title}</RecipeTitle>
 
-      {/* 본문 표시 */}
-      <Title>레시피 상세</Title>
-      <RecipeDesc>{contents}</RecipeDesc>
+        <Title>필요 재료</Title>
+        {/* 재료 표시 */}
+        {
+          ingredients.map((el) => {
+            return (
+              <ILists key={el.id}>
+                <IListsItems>{el.name}</IListsItems>
+                <IListsItems>{el.amounts}</IListsItems>
+              </ILists>
+            )
+          })
+        }
+
+        {/* 본문 표시 */}
+        <Title>레시피 상세</Title>
+        <RecipeDesc>{contents}</RecipeDesc>
 
     </Container>
   )
