@@ -24,7 +24,7 @@ const uploadRecipe = asyncWrapper(async (req, res) => {
 })
 
 
-// 내가 만든 레시피 조회
+// 내가 만든 레시피 모두 조회
 const getRecipe = asyncWrapper(async (req, res) => {
     const data = verifyToken(req.headers.authorization.split(' ')[1]);
     const userInfo = await User.findOne({ _id: data.id });
@@ -36,6 +36,26 @@ const getRecipe = asyncWrapper(async (req, res) => {
         },
         message: "success"
     });
+})
+
+
+// 레시피 1개 조회
+const getSingleRecipe = asyncWrapper(async (req, res) => {
+    const { id } = req.params;
+    const recipe = await Recipe.findOne({ _id: id });
+    if (!recipe) { // id가 유효하지 않을 경우
+        res.status(400).json({
+            data: null,
+            message: "fail : invalid recipe's id"
+        })
+    } else {
+        res.status(400).json({
+            data: {
+                recipe: recipe
+            },
+            message: "success"
+        })
+    }
 })
 
 
@@ -117,6 +137,7 @@ const bookmarkRecipe = asyncWrapper(async (req, res) => {
 module.exports = {
     uploadRecipe,
     getRecipe,
+    getSingleRecipe,
     deleteRecipe,
     modifyRecipe,
     bookmarkRecipe
