@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
     nickname: {
@@ -23,5 +24,13 @@ const UserSchema = new mongoose.Schema({
         default: Date.now,
     }
 })
+
+
+UserSchema.pre("save", async function (next) {
+    const salt = await bcrypt.genSalt(); // salt 생성
+    this.password = await bcrypt.hash(this.password, salt); // 비밀번호 해싱
+    next();
+  });
+
 
 module.exports = mongoose.model('User', UserSchema);

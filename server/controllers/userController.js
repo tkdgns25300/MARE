@@ -2,6 +2,7 @@ const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const verifyToken = require('../utils/verifyToken');
 const asyncWrapper = require('../middleware/async');
+const findWithPassword = require('../middleware/findWithPassword');
 
 
 // 회원 가입
@@ -31,7 +32,7 @@ const signout = asyncWrapper(async (req, res) => {
 const login = asyncWrapper(async (req, res) => {
     const { email, password } = req.body;
     if (email && password) {
-        const userInfo = await User.findOne({ email, password });
+        const userInfo = await findWithPassword({ email }, password);
         if (!userInfo) { // 해당 User가 없는 경우
             res.status(400).json({
                 data: null,
@@ -110,7 +111,7 @@ const checkPassword = asyncWrapper(async (req, res) => {
         })
     } else {
         const data = verifyToken(req.headers.authorization.split(' ')[1]);
-        const userInfo = await User.findOne({ _id: data.id, password: password });
+        const userInfo = await findWithPassword({ _id: data.id }, password);
         if (!userInfo) {
             res.status(400).json({ // 유효하지 않은 password일 경우
                 message: "fail : invalid password"
