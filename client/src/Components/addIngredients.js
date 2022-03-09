@@ -45,7 +45,6 @@ const IngredientForms = ({ allIngredients, setAllIngredients }) => {
   const [ingredient, setIngredient] = useState('')
   const [amounts, setAmounts] = useState('')
 
-
   const handleIngredient = (e) => {
     setIngredient(e.target.value)
   }
