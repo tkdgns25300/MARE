@@ -1,19 +1,24 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faClipboard, faSquarePlus, faStar, faUser } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faClipboard,
+  faSquarePlus,
+  faStar,
+  faUser,
+} from "@fortawesome/free-regular-svg-icons";
 
 const Container = styled.div`
-    display: flex;
-  `
+  display: flex;
+`;
 
 const MenuBtn = styled.div`
   background-color: beige;
   box-sizing: border-box;
   width: 100px;
-  height: 60px; 
-`
+  height: 60px;
+`;
 
 const SLink = styled(Link)`
   display: grid;
@@ -23,27 +28,36 @@ const SLink = styled(Link)`
   text-align: center;
   color: black;
   text-decoration: none;
-`
+`;
 
 export const Navbar = () => {
   return (
     <Container>
       <MenuBtn>
-        <SLink to="signup">
-          <FontAwesomeIcon icon={faClipboard} size="2x" />나의 레시피</SLink>
+        <SLink to="login">
+          {/* signup 으로 변경해두기 */}
+          <FontAwesomeIcon icon={faClipboard} size="2x" />
+          나의 레시피
+        </SLink>
       </MenuBtn>
       <MenuBtn>
         <SLink to="favorites">
-          <FontAwesomeIcon icon={faStar} size="2x" />즐겨찾기</SLink>
+          <FontAwesomeIcon icon={faStar} size="2x" />
+          즐겨찾기
+        </SLink>
       </MenuBtn>
       <MenuBtn>
         <SLink to="add_recipe">
-          <FontAwesomeIcon icon={faSquarePlus} size="2x" />레피시 추가</SLink>
+          <FontAwesomeIcon icon={faSquarePlus} size="2x" />
+          레피시 추가
+        </SLink>
       </MenuBtn>
       <MenuBtn>
         <SLink to="mypage">
-          <FontAwesomeIcon icon={faUser} size="2x" />마이페이지</SLink>
+          <FontAwesomeIcon icon={faUser} size="2x" />
+          마이페이지
+        </SLink>
       </MenuBtn>
     </Container>
-  )
+  );
 };
