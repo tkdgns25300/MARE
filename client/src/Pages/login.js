@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
@@ -38,39 +38,36 @@ const Slink = styled.span`
   }
 `;
 
-export const Login = () => {
+const serverPath = process.env.REACT_APP_SERVER_PATH;
+
+export const Login = ({ loginToken }) => {
+  // App.js에서 전달받은 프롭스(loginToken)
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [newToken, setNewToken] = useState("");
+
+  const login = async () => {
+    // 요청 전달
+    const response = await axios.post(
+      `${serverPath}/users/login`,
+      { email: email, password: pass },
+      { headers: { "Content-Type": "application/json;charset=utf-8" } }
+    );
+    return response;
+  };
+
+  useEffect(() => {
+    loginToken(newToken);
+  }, [newToken]);
+  //App.js 전달 받은 상태를 변경해서 전달해주기위함
 
   const submit = async (e) => {
+    // 이메일과 패스워드를 바디로 보내주고 토큰의 상태를 갱신해주는 함수
     e.preventDefault();
     const ok = await login(email, pass);
     if (ok) {
-      localStorage.setItem("token", ok);
+      setNewToken(ok.data.data.accessToken);
     }
-
-    const postLogin = () => {
-      login(email, pass).then((res) => alert(res));
-    };
-    postLogin();
-  };
-
-  const login = async (email, password) => {
-    const response = await axios
-      .post(
-        "http://localhost:3001/test",
-        { email, password },
-        { headers: { "Content-Type": "application/json;charset=utf-8" } }
-      )
-      .then((res) => {
-        const ok = res.data;
-        if (ok) {
-          console.log("로그인", res.data);
-          return `환영합니다.`;
-        }
-      })
-      .catch((error) => error);
-    return response;
   };
 
   return (
