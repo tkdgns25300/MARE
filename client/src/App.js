@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Reset } from 'styled-reset'
 import Signup from './Pages/signup';
 import { Navbar } from './Components/navbar';
-import PasswordEdit from './Pages/passwordedit'
+import { PasswordEdit } from './Pages/passwordedit'
 import { AddIngredients } from './Components/addIngredients';
 import { AddRecipe } from './Pages/add_recipe';
 import { Login } from './Pages/login';
@@ -36,7 +36,6 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="add_recipe" element={<AddRecipe />} />
       </Routes>
-      < PasswordEdit />
       <RecipeDetails />
       <Navbar />
     </div>
