@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react"
-import router from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
 
 const serverPath = process.env.REACT_APP_SERVER_PATH
 // api 주소
-
 
 // todo : 닉네임과 이메일이 둘다 유효하며(유일하며), 모든 필드가 작성된 경우에만 제출버튼이 활성화 되어야함
 // todo : 회원가입이 완료되면 로그인 창으로 리다이렉트 해야함. 
@@ -23,8 +21,8 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [checkPassword, setCheckPassword] = useState('')
 
-  const [isNotUsingEmail, setisNotUsingEmail] = useState(false)
-  const [isNotUsingNickname, setisNotUsingNickname] = useState(false)
+  const [isNotUsingEmail, setIsNotUsingEmail] = useState(false)
+  const [isNotUsingNickname, setIsNotUsingNickname] = useState(false)
   const [activeSubmit, setActiveSubmit] = useState(false)
 
   useEffect(() => {
@@ -48,32 +46,32 @@ const Signup = () => {
 
   const emailValidateCheck = async () => {
     // 이메일의 중복여부를 API를 이용하여 확인한다.
-    const res = await axios.post(`${serverPath}/user/check-email`, {
+    const res = await axios.post(`${serverPath}/users/email`, {
       "email": email
     })
 
     if (res.status === 200) {
-      setisNotUsingEmail(true)
+      setIsNotUsingEmail(true)
     } else {
-      setisNotUsingEmail(false)
+      setIsNotUsingEmail(false)
     }
   }
   const nicknameValidateCheck = async () => {
     // 닉네임의 중복여부를 API를 이용하여 확인한다.
-    const res = await axios.post(`${serverPath}/user/check-nickname`, {
+    const res = await axios.post(`${serverPath}/users/nickname`, {
       "nickname": nickname
     })
 
     if (res.status === 200) {
-      setisNotUsingNickname(true)
+      setIsNotUsingNickname(true)
     } else {
-      setisNotUsingNickname(false)
+      setIsNotUsingNickname(false)
     }
   }
 
   const signinHandler = async () => {
     // 작성된 내용을 요청의 바디로 전달한다.
-    const res = axios.post(`${serverPath}/user/signup`, {
+    const res = axios.post(`${serverPath}/users/signup`, {
       "email": email,
       "nickname": nickname,
       "password": password
@@ -81,6 +79,7 @@ const Signup = () => {
     if (res.status !== 200) {
       //throw Err!
     }
+    
   }
 
   const ValidateBtn = ({ validCheckFn }) => {
@@ -130,7 +129,10 @@ const Signup = () => {
       {/* 이메일 입력 */}
       <div className="email_input">
         <h3>이메일 입력</h3>
-        <input type="email" placeholder="이메일 입력" onChange={e => setValue(e, setEmail)} />
+        <input type="email" placeholder="이메일 입력" onChange={(e) => {
+            setValue(e, setEmail)
+            setIsNotUsingEmail(false)
+          }} />
         <EmailNotification />
         <ValidateBtn validCheckFn={emailValidateCheck} />
       </div>
@@ -138,7 +140,10 @@ const Signup = () => {
       {/* 닉네임 입력 */}
       <div className="nickname_input">
         <h3>닉네임 입력</h3>
-        <input type="text" placeholder="닉네임 입력" onChange={e => setValue(e, setNickname)} />
+        <input type="text" placeholder="닉네임 입력" onChange={(e) => {
+          setValue(e, setNickname)
+          setIsNotUsingNickname(false)
+          }} />
         <NicknameNotification />
         <ValidateBtn validCheckFn={nicknameValidateCheck} />
       </div>
