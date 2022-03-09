@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import imageCompression from "browser-image-compression"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { } from "@fortawesome/free-regular-svg-icons"
 
 import { AddIngredients } from "../Components/addIngredients";
 
-const IMGBB_API_KEY = "71e3c54f067d8e9f734ba3d5b52e6aff"
+const IMGBB_API_KEY = "0d8b2c1f68fcd3c31a904c9a80a932da"
 const serverPath = process.env.REACT_APP_SERVER_PATH
 
 const Container = styled.div`
@@ -82,6 +81,7 @@ export const AddRecipe = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [previewImgUrl, setPreviewImgUrl] = useState('')
   const [imgBase64, setImgBase64] = useState('')
+  const [imgHostUrl, setImgHostUrl] = useState('')
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -93,20 +93,12 @@ export const AddRecipe = () => {
     const img = e.target.files[0]
     setPreviewImgUrl(URL.createObjectURL(img))
 
-    const option = {
-      maxSizeMB: 0.5
-    }
-
-    const compImg = await imageCompression(img, option)
-
     let reader = new FileReader()
 
-    reader.readAsDataURL(compImg)
+    reader.readAsDataURL(img)
     reader.onload = () => {
-      // console.log(reader.result)
-      setImgBase64(reader.result)
+      setImgBase64(reader.result.split(',')[1])
     }
-
     setIsLoading(false)
   }
 
@@ -129,26 +121,42 @@ export const AddRecipe = () => {
   const handleContent = (e) => {
     setContent(e.target.value)
   }
-  
+
 
   const handleSubmit = async () => {
     const body = {
-      "title" : title,
-      "photo": imgBase64,
-      "ingredients" : ingredients,
-      "content" : content
+      "title": title,
+      "photo": imgHostUrl,
+      "ingredient": ingredients,
+      "contents": content
+    }
+    const tempToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjVjNWY5ZjI2NTdlN2I4Y2I1YjhiNSIsImlhdCI6MTY0NjcyMDc5MywiZXhwIjoxNjQ2ODA3MTkzfQ.ZjN2O8A_Cz-FBIo1Z460PmXYP5hoU896jh0QlfQDM5I'
+    const headers = {
+      headers: {
+        "Authorization": `Bearer ${tempToken}`
+      }
     }
 
-    const header = {
-      // "Authorization" : AuthToken// App.js 에서 받은 토큰
-    }
-
-    const res = await axios.post(`${serverPath}/recipe/content`, body, header)
+    const res = await axios.post(`${serverPath}/recipe/content`, body, headers)
   }
 
   const updateIngre = (data) => {
     setIngredients(data)
   }
+
+  useEffect(() => {
+    const uploadImg = async () => {
+      let form = new FormData()
+
+      form.append('key', IMGBB_API_KEY)
+      form.append('image', `${imgBase64}`)
+
+      const imgHosting = await axios.post('https://api.imgbb.com/1/upload', form)
+      setImgHostUrl(imgHosting.data.data.url)
+    }
+    if (imgBase64) uploadImg()
+  }, [imgBase64])
+
 
   return (
     <Container>
@@ -157,16 +165,16 @@ export const AddRecipe = () => {
 
       {
         isLoading ? <ImgUploadBtn>업로드 중입니다...</ImgUploadBtn>
-        : <ImgUploadBtn onClick={imgUploadBtnClick} bg={previewImgUrl}>여기를 눌러 사진을 업로드하세요.</ImgUploadBtn>
+          : <ImgUploadBtn onClick={imgUploadBtnClick} bg={previewImgUrl}>여기를 눌러 사진을 업로드하세요.</ImgUploadBtn>
       }
-      
+
       {previewImgUrl ? <ImgDeleteBtn onClick={deleteImg}>✕</ImgDeleteBtn> : <></>}
 
       {/* 제목 작성 */}
       <h3>레시피 제목</h3>
-      <TitleInput type="text" placeholder="레시피 제목 입력" onChange={handleTitle}/>
+      <TitleInput type="text" placeholder="레시피 제목 입력" onChange={handleTitle} />
 
-      <AddIngredients updateIngre={updateIngre}/>
+      <AddIngredients updateIngre={updateIngre} />
 
       {/* 본문 작성 */}
       <h3>레시피 작성</h3>
