@@ -103,11 +103,11 @@ const ShowIngredients = ({ data, allIngredients, setAllIngredients }) => {
 }
 
 // Render
-export const AddIngredients = ( { updateIngre } ) => {
+export const AddIngredients = ({ updateIngre, setIngredients } ) => {
   const [allIngredients, setAllIngredients] = useState([])
 
   useEffect(() => {
-    updateIngre(allIngredients)
+    setIngredients(allIngredients)
   }, [allIngredients])
 
   return (

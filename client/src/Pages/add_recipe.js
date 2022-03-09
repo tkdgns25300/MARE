@@ -52,7 +52,11 @@ const TitleInput = styled.input`
 
 const Textarea = styled.textarea`
   width: 80%;
-  height: 350px;
+  min-height: 350px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
 `
 
 const SubmitBtn = styled.div`
@@ -79,6 +83,7 @@ export const AddRecipe = () => {
 
 
   const [isLoading, setIsLoading] = useState(false)
+  const [isImgUpload, setIsImgUpload] = useState(false)
   const [previewImgUrl, setPreviewImgUrl] = useState('')
   const [imgBase64, setImgBase64] = useState('')
   const [imgHostUrl, setImgHostUrl] = useState('')
@@ -90,6 +95,7 @@ export const AddRecipe = () => {
   const uploadTumbnail = async (e) => {
     e.preventDefault()
     setIsLoading(true)
+    setIsImgUpload(true)
     const img = e.target.files[0]
     setPreviewImgUrl(URL.createObjectURL(img))
 
@@ -99,7 +105,7 @@ export const AddRecipe = () => {
     reader.onload = () => {
       setImgBase64(reader.result.split(',')[1])
     }
-    setIsLoading(false)
+    
   }
 
   const imgUploadBtnClick = (e) => {
@@ -108,6 +114,7 @@ export const AddRecipe = () => {
   }
 
   const deleteImg = () => {
+    setIsImgUpload(false)
     setPreviewImgUrl('')
     setImgBase64('')
   }
@@ -122,26 +129,20 @@ export const AddRecipe = () => {
     setContent(e.target.value)
   }
 
-
   const handleSubmit = async () => {
-    const body = {
-      "title": title,
-      "photo": imgHostUrl,
-      "ingredient": ingredients,
-      "contents": content
-    }
-    const tempToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjVjNWY5ZjI2NTdlN2I4Y2I1YjhiNSIsImlhdCI6MTY0NjcyMDc5MywiZXhwIjoxNjQ2ODA3MTkzfQ.ZjN2O8A_Cz-FBIo1Z460PmXYP5hoU896jh0QlfQDM5I'
-    const headers = {
-      headers: {
-        "Authorization": `Bearer ${tempToken}`
+      const body = {
+        "title": title,
+        "photo": imgHostUrl,
+        "ingredient": ingredients,
+        "contents": content
       }
-    }
-
-    const res = await axios.post(`${serverPath}/recipe/content`, body, headers)
-  }
-
-  const updateIngre = (data) => {
-    setIngredients(data)
+      const tempToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjVjNWY5ZjI2NTdlN2I4Y2I1YjhiNSIsImlhdCI6MTY0NjcyMDc5MywiZXhwIjoxNjQ2ODA3MTkzfQ.ZjN2O8A_Cz-FBIo1Z460PmXYP5hoU896jh0QlfQDM5I'
+      const headers = {
+        headers: {
+          "Authorization": `Bearer ${tempToken}`
+        }
+      }
+      axios.post(`${serverPath}/recipe/content`, body, headers)
   }
 
   useEffect(() => {
@@ -153,10 +154,10 @@ export const AddRecipe = () => {
 
       const imgHosting = await axios.post('https://api.imgbb.com/1/upload', form)
       setImgHostUrl(imgHosting.data.data.url)
+      setIsLoading(false)
     }
     if (imgBase64) uploadImg()
   }, [imgBase64])
-
 
   return (
     <Container>
@@ -174,7 +175,7 @@ export const AddRecipe = () => {
       <h3>레시피 제목</h3>
       <TitleInput type="text" placeholder="레시피 제목 입력" onChange={handleTitle} />
 
-      <AddIngredients updateIngre={updateIngre} />
+      <AddIngredients setIngredients={setIngredients} />
 
       {/* 본문 작성 */}
       <h3>레시피 작성</h3>
