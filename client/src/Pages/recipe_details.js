@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 import { Topbar } from "../Components/topbar";
-
+import { useParams } from "react-router-dom";
 
 const serverPath = process.env.REACT_APP_SERVER_PATH
 
@@ -70,54 +70,50 @@ const RecipeDesc = styled.div`
   border-radius: 5px;
   padding: 5px;
   background-color: #fff;
-
 `
 
-export const RecipeDetails = () => {
+export const RecipeDetails = ({ loginToken }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isBookmarked, setIsBookmarked] = useState('')
 
-  const [recipeId, setRecipeId] = useState('')
   const [title, setTitle] = useState('')
-  const [contents, setContents] = useState('')
-  const [photo, setPhoto] = useState('')
+  const [img, setImg] = useState('')
   const [ingredients, setIngredients] = useState([])
+  const [contents, setContents] = useState('')
 
 
-  // 더미 데이터
-  const data = {
-    _id: "62246ae8fdd52786cb011ba4",
-    nickname: "Back-end Developer",
-    title: "맛있는 김치볶음밥",
-    photo: "https://i.ibb.co/wcXBQQx/79d56a29e657.jpg",
-    ingredient: [
-      { id: "49159c83-98ed-4410-bc70-2841e93bd4d2", name: "고추장", amounts: "2스쿱" },
-      { id: "ac33d74d-a130-4e4b-869b-e98ff5b5ca7c", name: "고추가루", amounts: "2스푼" },
-      { id: "b1305fd8-2665-4858-9afa-be9e109a46ca", name: "설탕", amounts: "2스푼" },
-    ],
-    contents: "소금을 넣고 고추장을 넣는다 \n 아아아ㅏ",
-    bookmark: true,
-    createdAt: "2022 - 03 - 06T08: 03: 52.567Z,__v: 0"
+  const { id } = useParams()
+
+  const getData = async () => {
+    const headers = {
+      headers: {
+        "Authorization": `Bearer ${loginToken}`
+      }
+    }
+
+    await axios.get(`${serverPath}/recipe/content/${id}`, headers)
+      .then((res) => {
+        const { title, photo, ingredient, contents, bookmark } = res.data.data.recipe
+
+        setTitle(title)
+        setImg(photo)
+        setIngredients(ingredient)
+        setContents(contents)
+
+        setIsBookmarked(bookmark)
+      })
   }
 
   // 페이지 렌더링시 데이터를 상태에 저장
   useEffect(() => {
     setIsLoading(true)
-
-    setIsBookmarked(data.bookmark)
-
-    setRecipeId(data._id)
-    setTitle(data.title)
-    setPhoto(data.photo)
-    setIngredients(data.ingredient)
-    setContents(data.contents)
-
+    getData()
     setIsLoading(false)
   }, [])
 
   const toggleBookmark = async () => {
     const res = await axios.post(`${serverPath}/recipe/bookmark`, {
-      id: recipeId
+      id: id
     })
 
     if (res.status === 200) {
@@ -127,40 +123,40 @@ export const RecipeDetails = () => {
     }
   }
 
-
-
+  const IngredientsList = () => {
+    if(ingredients.length > 0){
+    return ingredients.map(el => {
+      return (
+        <ILists>
+          <IListsItems>{el.name}</IListsItems>
+          <IListsItems>{el.amounts}</IListsItems>
+        </ILists>
+      )
+    })
+    } else {
+      return <div>등록된 재료가 없습니다.</div>
+    }
+  }
 
   return (
-
     <Container>
       <Topbar pageTitle='레시피 상세' />
       {/* 썸네일 */}
-      <RecipeImg bg={photo}>
-        <BookmarkBtn icon={faHeart} size="2x" onClick={toggleBookmark} bookmarked={isBookmarked ? "true" : ""} />
-        </RecipeImg>
-
+      <RecipeImg bg={img}>
         {/* 북마크 버튼 */}
+        <BookmarkBtn icon={faHeart} size="2x" onClick={toggleBookmark} bookmarked={isBookmarked ? "true" : ""} />
+      </RecipeImg>
 
+      {/* 제목 표시 */}
+      <RecipeTitle>{title}</RecipeTitle>
 
-        {/* 제목 표시 */}
-        <RecipeTitle>{title}</RecipeTitle>
+      <Title>필요 재료</Title>
+      {/* 재료 표시 */}
+      <IngredientsList />
 
-        <Title>필요 재료</Title>
-        {/* 재료 표시 */}
-        {
-          ingredients.map((el) => {
-            return (
-              <ILists key={el.id}>
-                <IListsItems>{el.name}</IListsItems>
-                <IListsItems>{el.amounts}</IListsItems>
-              </ILists>
-            )
-          })
-        }
-
-        {/* 본문 표시 */}
-        <Title>레시피 상세</Title>
-        <RecipeDesc>{contents}</RecipeDesc>
+      {/* 본문 표시 */}
+      <Title>레시피 상세</Title>
+      <RecipeDesc>{contents}</RecipeDesc>
 
     </Container>
   )

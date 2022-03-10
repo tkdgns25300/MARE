@@ -34,7 +34,7 @@ export const Navbar = () => {
   return (
     <Container>
       <MenuBtn>
-        <SLink to="login">
+        <SLink to="my_recipes">
           {/* signup 으로 변경해두기 */}
           <FontAwesomeIcon icon={faClipboard} size="2x" />
           나의 레시피
