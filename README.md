@@ -23,7 +23,7 @@
 <br/><br/>
 
 
-## 🛖 **[Homepage](http://mare.kitchen) 바로가기**
+## 🌏 **[Homepage](http://mare.kitchen) 바로가기**
 <br/><br/>
 
 
