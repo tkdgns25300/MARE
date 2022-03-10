@@ -9,6 +9,7 @@ const Container = styled.div`
   display: grid;
   place-items: center;
   height: 600px;
+  background-color: #dfd5d2;
 `;
 
 const Slink = styled(Link)``;
