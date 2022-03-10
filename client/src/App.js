@@ -64,34 +64,6 @@ function App() {
     <div className="App">
       <Reset />
       <div>퍼스트 프로젝트</div>
-      <Routes>
-        <Route path="login" element={<Login loginToken={setLoginToken} />} />
-        <Route path="signup" element={<Signup />} />
-        <Route
-          path="add_recipe"
-          element={<AddRecipe loginToken={loginToken} />}
-        />
-        <Route
-          path="my_recipes"
-          element={<MyRecipes loginToken={loginToken} />}
-        />
-        <Route
-          path="favorites"
-          element={<Favorites loginToken={loginToken} />}
-        />
-        <Route
-          path="recipe_details/:id"
-          element={<RecipeDetails loginToken={loginToken} />}
-        />
-        <Route
-          path="passwordedit"
-          element={<PasswordEdit loginToken={loginToken} />}
-        />
-        <Route
-          path="enterpassword"
-          element={<EnterPassword loginToken={loginToken} />}
-        />
-      </Routes>
       <Navbar />
       <Container>
         <Reset />
@@ -124,6 +96,10 @@ function App() {
             <Route
               path="recipe_details/:id"
               element={<RecipeDetails loginToken={loginToken} />}
+            />
+            <Route
+              path="enterpassword"
+              element={<EnterPassword loginToken={loginToken} />}
             />
           </Routes>
           <Navbar />
