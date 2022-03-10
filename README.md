@@ -31,4 +31,29 @@
 [![stack.png](https://i.postimg.cc/X7sZ7wh3/stack.png)](https://postimg.cc/hf7427c3)
 <br/><br/>
 
-[🏘️ 팀원 소개](https://www.notion.so/31b4da05ab0548c7b8c8ad1342051bbc)
+## 🏘️ 팀원 소개
+<table role="table">
+  <thead>
+    <tr>
+      <th>이름(깃허브링크)</th>
+      <th>Position & Role</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr>
+     <td> <a href="https://github.com/Lpickle">박우용(팀장)</a> </td>
+     <td> 🏳️ Front-end </td>
+   </tr>
+   <tr>
+     <td> <a href="https://github.com/jo-seungho">조승호</a> </td>
+     <td> 🏳️ Front-end </td>
+   </tr>
+   <tr>
+     <td> <a href="https://github.com/CHOI-K-ROCK">최경락</a> </td>
+     <td> 🏳️ Front-end </td>
+   </tr>
+   <tr>
+     <td> <a href="https://github.com/tkdgns25300">이상훈</a> </td>
+     <td> 🏴 Back-end </td>
+   </tr>
+  </tbody>
