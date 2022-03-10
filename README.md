@@ -1,6 +1,6 @@
 ## **Logo**
 
-![MARE.png](https://ibb.co/xXJW2g0)
+[![MARE.png](https://i.postimg.cc/CKLmnHMN/MARE.png)](https://postimg.cc/YvZ1JFWG)
 <br/><br/>
 
 
@@ -28,7 +28,7 @@
 
 
 ## 📋 사용한 기술 스택 & 아키텍처
-![stack.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d0cfaf91-0ed1-42d0-be1b-7271538ced63/stack.png)
+[![stack.png](https://i.postimg.cc/X7sZ7wh3/stack.png)](https://postimg.cc/hf7427c3)
 <br/><br/>
 
 [🏘️ 팀원 소개](https://www.notion.so/31b4da05ab0548c7b8c8ad1342051bbc)
