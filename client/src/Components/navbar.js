@@ -53,7 +53,7 @@ export const Navbar = () => {
         </SLink>
       </MenuBtn>
       <MenuBtn>
-        <SLink to="mypage">
+        <SLink to="mapage">
           <FontAwesomeIcon icon={faUser} size="2x" />
           마이페이지
         </SLink>
