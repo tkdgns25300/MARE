@@ -93,6 +93,10 @@ function App() {
               path="recipe_details/:id"
               element={<RecipeDetails loginToken={loginToken} />}
             />
+            <Route
+              path="enterpassword"
+              element={<EnterPassword loginToken={loginToken} />}
+            />
           </Routes>
           <Navbar />
         </MareApp>
