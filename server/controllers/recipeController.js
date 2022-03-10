@@ -57,7 +57,7 @@ const getSingleRecipe = asyncWrapper(async (req, res) => {
             message: "fail : invalid recipe's id"
         })
     } else {
-        res.status(400).json({
+        res.status(200).json({
             data: {
                 recipe: recipe
             },
