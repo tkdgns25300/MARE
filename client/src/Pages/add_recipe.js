@@ -5,9 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { } from "@fortawesome/free-regular-svg-icons"
 
 import { AddIngredients } from "../Components/addIngredients";
+import { Topbar } from "../Components/topbar";
+import { useNavigate } from "react-router-dom";
 
-const IMGBB_API_KEY = "0d8b2c1f68fcd3c31a904c9a80a932da"
 const serverPath = process.env.REACT_APP_SERVER_PATH
+const imgbbApi = process.env.REACT_APP_IMGBB_API_KEY
 
 const Container = styled.div`
   position: relative;
@@ -73,14 +75,8 @@ const SubmitBtn = styled.div`
   cursor : pointer;
 `
 
-export const AddRecipe = () => {
-  // 필요한 상태 : 
-  // 1. 사진을 업로드 하고 전달받은 url
-  // 2. 제목
-  // 3. 재료 목록
-  // 4. 본문
-  const inputBtn = useRef()
-
+export const AddRecipe = ({ loginToken }) => {
+  const nav = useNavigate()
 
   const [isLoading, setIsLoading] = useState(false)
   const [isImgUpload, setIsImgUpload] = useState(false)
@@ -91,6 +87,8 @@ export const AddRecipe = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [ingredients, setIngredients] = useState([])
+
+  const inputBtn = useRef()
 
   const uploadTumbnail = async (e) => {
     e.preventDefault()
@@ -105,7 +103,6 @@ export const AddRecipe = () => {
     reader.onload = () => {
       setImgBase64(reader.result.split(',')[1])
     }
-    
   }
 
   const imgUploadBtnClick = (e) => {
@@ -130,26 +127,30 @@ export const AddRecipe = () => {
   }
 
   const handleSubmit = async () => {
-      const body = {
-        "title": title,
-        "photo": imgHostUrl,
-        "ingredient": ingredients,
-        "contents": content
+    const body = {
+      "title": title,
+      "photo": imgHostUrl,
+      "ingredient": ingredients,
+      "contents": content
+    }
+    const headers = {
+      headers: {
+        "Authorization": `Bearer ${loginToken}`
       }
-      const tempToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMjVjNWY5ZjI2NTdlN2I4Y2I1YjhiNSIsImlhdCI6MTY0NjcyMDc5MywiZXhwIjoxNjQ2ODA3MTkzfQ.ZjN2O8A_Cz-FBIo1Z460PmXYP5hoU896jh0QlfQDM5I'
-      const headers = {
-        headers: {
-          "Authorization": `Bearer ${tempToken}`
-        }
+    }
+    axios.post(`${serverPath}/recipe/content`, body, headers)
+    .then((res) => {
+      if(res.status === 201){
+        nav('/my_recipe')  
       }
-      axios.post(`${serverPath}/recipe/content`, body, headers)
+    })
   }
 
   useEffect(() => {
     const uploadImg = async () => {
       let form = new FormData()
 
-      form.append('key', IMGBB_API_KEY)
+      form.append('key', imgbbApi)
       form.append('image', `${imgBase64}`)
 
       const imgHosting = await axios.post('https://api.imgbb.com/1/upload', form)
@@ -161,6 +162,7 @@ export const AddRecipe = () => {
 
   return (
     <Container>
+      <Topbar pageTitle={"레시피 추가"}/>
       {/* 사진 업로드 */}
       <input style={{ display: "none" }} type="file" accept="image/*" onChange={uploadTumbnail} ref={inputBtn} />
 
