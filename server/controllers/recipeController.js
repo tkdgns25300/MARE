@@ -6,13 +6,21 @@ const asyncWrapper = require('../middleware/async');
 
 // 레시피 업로드
 const uploadRecipe = asyncWrapper(async (req, res) => {
-    const { title, photo, ingredient, contents } = req.body;
+    let { title, photo, ingredient, contents } = req.body;
     if (title && ingredient && contents) {
         const data = verifyToken(req.headers.authorization.split(' ')[1]);
         const userInfo = await User.findOne({ _id: data.id });
         const { nickname } = userInfo;
         req.body.nickname = nickname;
-        await Recipe.create(req.body);
+        // photo가 빈 문자열일 경우
+        if (photo === "") photo = "https://i.ibb.co/nfq39b4/cutting-board-g299e1b556-1920.jpg"
+        await Recipe.create({
+            nickname,
+            title,
+            photo,
+            ingredient,
+            contents
+        });
         res.status(201).json({
             message: "success"
         })
@@ -49,7 +57,7 @@ const getSingleRecipe = asyncWrapper(async (req, res) => {
             message: "fail : invalid recipe's id"
         })
     } else {
-        res.status(400).json({
+        res.status(200).json({
             data: {
                 recipe: recipe
             },
