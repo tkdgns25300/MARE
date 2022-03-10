@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Reset } from "styled-reset";
-import PasswordEdit from "./Pages/passwordedit";
+import { PasswordEdit } from "./Pages/passwordedit";
 import Signup from "./Pages/signup";
 import { AddRecipe } from "./Pages/add_recipe";
 import { RecipeDetails } from "./Pages/recipe_details";
@@ -14,6 +14,7 @@ import { Userinfo } from "./Pages/userinfo";
 import { ChangeNick } from "./Pages/changenick";
 import { Mypage } from "./Pages/mypage";
 import styled from "styled-components";
+import { EnterPassword } from "./Pages/enterpassword";
 
 // 각 페이지 별 path
 
@@ -26,15 +27,15 @@ import styled from "styled-components";
 // 마이페이지 /mypage
 const Container = styled.div`
   display: grid;
-  place-items : center;
-  width: 100vw ;
-  height: 100vh ;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
   background: linear-gradient(to top, #b8aeab, #fff);
-`
+`;
 
 const MareApp = styled.div`
-  box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
-`
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+`;
 
 function App() {
   const [loginToken, setLoginToken] = useState("");
@@ -68,8 +69,14 @@ function App() {
             <Route path="signup" element={<Signup />} />
             <Route path="changenick" element={<ChangeNick />} />
             <Route path="passwordedit" element={<PasswordEdit />} />
-            <Route path="userinfo" element={<Userinfo loginToken={loginToken} />} />
-            <Route path="login" element={<Login loginToken={setLoginToken} />} />
+            <Route
+              path="userinfo"
+              element={<Userinfo loginToken={loginToken} />}
+            />
+            <Route
+              path="login"
+              element={<Login loginToken={setLoginToken} />}
+            />
             <Route path="mypage" element={<Mypage loginToken={loginToken} />} />
             <Route
               path="add_recipe"
@@ -87,6 +94,15 @@ function App() {
               path="recipe_details/:id"
               element={<RecipeDetails loginToken={loginToken} />}
             />
+            <Route
+              path="enter_password"
+              element={<EnterPassword loginToken={loginToken} />}
+            />
+            <Route
+              path="password_edit"
+              element={<PasswordEdit loginToken={loginToken} />}
+            />
+
           </Routes>
           <Navbar />
         </MareApp>

@@ -5,7 +5,6 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Topbar } from "../Components/topbar";
 
-
 const Container = styled.div`
   display: grid;
   place-items: center;
@@ -38,10 +37,10 @@ const Btn = styled.div`
   background-color: #fff;
 
   margin-top: 5px;
-  border : 1px solid #000;
+  border: 1px solid #000;
 
   border-radius: 5px;
-  cursor : pointer;
+  cursor: pointer;
 `;
 
 const Column = styled.div``;
@@ -71,7 +70,7 @@ export const Login = ({ loginToken }) => {
   const [pass, setPass] = useState("");
   const [newToken, setNewToken] = useState("");
 
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const login = async () => {
     // 요청 전달
@@ -101,8 +100,8 @@ export const Login = ({ loginToken }) => {
   };
 
   const goToSignup = () => {
-    nav('/signup')
-  }
+    nav("/signup");
+  };
 
   return (
     <div>

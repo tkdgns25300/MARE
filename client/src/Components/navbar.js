@@ -11,7 +11,6 @@ import {
 
 const Container = styled.div`
   display: flex;
-  
 `;
 
 const MenuBtn = styled.div`
