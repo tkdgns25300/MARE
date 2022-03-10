@@ -9,6 +9,7 @@ const controllers = require('../controllers/recipeController');
 // route
 router.post('/content', checkToken, controllers.uploadRecipe);
 router.get('/content', checkToken, controllers.getRecipe);
+router.get('/content/:id', checkToken, controllers.getSingleRecipe);
 router.delete('/content', checkToken, controllers.deleteRecipe);
 router.patch('/content', checkToken, controllers.modifyRecipe);
 router.post('/bookmark', controllers.bookmarkRecipe);

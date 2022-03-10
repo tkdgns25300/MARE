@@ -6,13 +6,21 @@ const asyncWrapper = require('../middleware/async');
 
 // 레시피 업로드
 const uploadRecipe = asyncWrapper(async (req, res) => {
-    const { title, photo, ingredient, contents } = req.body;
+    let { title, photo, ingredient, contents } = req.body;
     if (title && ingredient && contents) {
         const data = verifyToken(req.headers.authorization.split(' ')[1]);
         const userInfo = await User.findOne({ _id: data.id });
         const { nickname } = userInfo;
         req.body.nickname = nickname;
-        await Recipe.create(req.body);
+        // photo가 빈 문자열일 경우
+        if (photo === "") photo = "https://i.ibb.co/nfq39b4/cutting-board-g299e1b556-1920.jpg"
+        await Recipe.create({
+            nickname,
+            title,
+            photo,
+            ingredient,
+            contents
+        });
         res.status(201).json({
             message: "success"
         })
@@ -24,7 +32,7 @@ const uploadRecipe = asyncWrapper(async (req, res) => {
 })
 
 
-// 내가 만든 레시피 조회
+// 내가 만든 레시피 모두 조회
 const getRecipe = asyncWrapper(async (req, res) => {
     const data = verifyToken(req.headers.authorization.split(' ')[1]);
     const userInfo = await User.findOne({ _id: data.id });
@@ -36,6 +44,26 @@ const getRecipe = asyncWrapper(async (req, res) => {
         },
         message: "success"
     });
+})
+
+
+// 레시피 1개 조회
+const getSingleRecipe = asyncWrapper(async (req, res) => {
+    const { id } = req.params;
+    const recipe = await Recipe.findOne({ _id: id });
+    if (!recipe) { // id가 유효하지 않을 경우
+        res.status(400).json({
+            data: null,
+            message: "fail : invalid recipe's id"
+        })
+    } else {
+        res.status(200).json({
+            data: {
+                recipe: recipe
+            },
+            message: "success"
+        })
+    }
 })
 
 
@@ -117,6 +145,7 @@ const bookmarkRecipe = asyncWrapper(async (req, res) => {
 module.exports = {
     uploadRecipe,
     getRecipe,
+    getSingleRecipe,
     deleteRecipe,
     modifyRecipe,
     bookmarkRecipe
