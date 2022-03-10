@@ -6,6 +6,15 @@ import { Topbar } from "../Components/topbar"
 
 const serverPath = process.env.REACT_APP_SERVER_PATH
 
+const Container = styled.div`
+  width: 400px;
+  display: grid;
+  place-items: center;
+  min-height: 600px;
+  background-color: #dfd5d2;
+`
+
+
 export const MyRecipes = ({ loginToken }) => {
   const [recipeList, setRecipeList] = useState([])
 
@@ -16,13 +25,13 @@ export const MyRecipes = ({ loginToken }) => {
   }
   const getData = async () => {
     await axios.get(`${serverPath}/recipe/content`, headers)
-      .then((res) => { 
-        setRecipeList(res.data.data.recipe) 
+      .then((res) => {
+        setRecipeList(res.data.data.recipe)
       })
   }
 
   const Thumbnails = () => {
-    if(recipeList.length > 0){
+    if (recipeList.length > 0) {
       return (
         recipeList.map((el) => {
           return <Thumbnail key={el._id} data={el} />
@@ -35,12 +44,14 @@ export const MyRecipes = ({ loginToken }) => {
 
   useEffect(() => {
     getData()
-  },[])
+  }, [])
 
   return (
     <div>
-      <Topbar pageTitle={"나의 레시피"}/>
-      <Thumbnails />
+      <Topbar pageTitle={"나의 레시피"} />
+      <Container>
+        <Thumbnails />
+      </Container>
     </div>
   )
 }
