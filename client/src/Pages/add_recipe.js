@@ -143,7 +143,7 @@ export const AddRecipe = ({ loginToken }) => {
     axios.post(`${serverPath}/recipe/content`, body, headers)
       .then((res) => {
         if (res.status === 201) {
-          nav('/my_recipe')
+          nav('/my_recipes')
         }
       })
   }
