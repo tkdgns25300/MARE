@@ -13,6 +13,7 @@ import { Navbar } from "./Components/navbar";
 import { Userinfo } from "./Pages/userinfo";
 import { ChangeNick } from "./Pages/changenick";
 import { Mypage } from "./Pages/mypage";
+import styled from "styled-components";
 
 // 각 페이지 별 path
 
@@ -23,6 +24,17 @@ import { Mypage } from "./Pages/mypage";
 // 즐겨찾기 보기 /favorites
 // 레시피 추가 /add_recipe
 // 마이페이지 /mypage
+const Container = styled.div`
+  display: grid;
+  place-items : center;
+  width: 100vw ;
+  height: 100vh ;
+  background: linear-gradient(to top, #b8aeab, #fff);
+`
+
+const MareApp = styled.div`
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+`
 
 function App() {
   const [loginToken, setLoginToken] = useState("");
@@ -49,32 +61,36 @@ function App() {
 
   return (
     <div className="App">
-      <Reset />
-      <Routes>
-        <Route path="signup" element={<Signup />} />
-        <Route path="changenick" element={<ChangeNick />} />
-        <Route path="passwordedit" element={<PasswordEdit />} />
-        <Route path="userinfo" element={<Userinfo loginToken={loginToken} />} />
-        <Route path="login" element={<Login loginToken={setLoginToken} />} />
-        <Route path="mypage" element={<Mypage loginToken={loginToken} />} />
-        <Route
-          path="add_recipe"
-          element={<AddRecipe loginToken={loginToken} />}
-        />
-        <Route
-          path="my_recipes"
-          element={<MyRecipes loginToken={loginToken} />}
-        />
-        <Route
-          path="favorites"
-          element={<Favorites loginToken={loginToken} />}
-        />
-        <Route
-          path="recipe_details/:id"
-          element={<RecipeDetails loginToken={loginToken} />}
-        />
-      </Routes>
-      <Navbar />
+      <Container>
+        <Reset />
+        <MareApp>
+          <Routes>
+            <Route path="signup" element={<Signup />} />
+            <Route path="changenick" element={<ChangeNick />} />
+            <Route path="passwordedit" element={<PasswordEdit />} />
+            <Route path="userinfo" element={<Userinfo loginToken={loginToken} />} />
+            <Route path="login" element={<Login loginToken={setLoginToken} />} />
+            <Route path="mypage" element={<Mypage loginToken={loginToken} />} />
+            <Route
+              path="add_recipe"
+              element={<AddRecipe loginToken={loginToken} />}
+            />
+            <Route
+              path="my_recipes"
+              element={<MyRecipes loginToken={loginToken} />}
+            />
+            <Route
+              path="favorites"
+              element={<Favorites loginToken={loginToken} />}
+            />
+            <Route
+              path="recipe_details/:id"
+              element={<RecipeDetails loginToken={loginToken} />}
+            />
+          </Routes>
+          <Navbar />
+        </MareApp>
+      </Container>
     </div>
   );
 }
