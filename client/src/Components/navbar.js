@@ -11,7 +11,6 @@ import {
 
 const Container = styled.div`
   display: flex;
-  
 `;
 
 const MenuBtn = styled.div`
@@ -53,7 +52,7 @@ export const Navbar = () => {
         </SLink>
       </MenuBtn>
       <MenuBtn>
-        <SLink to="mapage">
+        <SLink to="mypage">
           <FontAwesomeIcon icon={faUser} size="2x" />
           마이페이지
         </SLink>

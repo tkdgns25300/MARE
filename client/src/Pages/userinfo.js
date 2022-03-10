@@ -8,8 +8,6 @@ const Container = styled.div``;
 
 const Slink = styled(Link)``;
 
-const Input = styled.input``;
-
 const Button = styled.button``;
 
 const Content = styled.span``;

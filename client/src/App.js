@@ -10,7 +10,6 @@ import { Login } from "./Pages/login";
 import { MyRecipes } from "./Pages/my_recipes";
 import { Favorites } from "./Pages/favorites";
 import { Navbar } from "./Components/navbar";
-import { EnterPassword } from "./Pages/enterpassword";
 import { Userinfo } from "./Pages/userinfo";
 import { ChangeNick } from "./Pages/changenick";
 import { Mypage } from "./Pages/mypage";
@@ -62,9 +61,6 @@ function App() {
 
   return (
     <div className="App">
-      <Reset />
-      <div>퍼스트 프로젝트</div>
-      <Navbar />
       <Container>
         <Reset />
         <MareApp>
