@@ -54,7 +54,6 @@ const Signup = () => {
     const res = await axios.post(`${serverPath}/users/email`, {
       email: email,
     });
-
     if (res.status === 200) {
       setIsNotUsingEmail(true);
     } else {

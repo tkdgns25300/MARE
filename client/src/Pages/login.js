@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { Topbar } from "../Components/topbar";
 
 const Container = styled.div``;
 const Logo = styled.img`
@@ -21,7 +23,7 @@ const Button = styled.button``;
 
 const Column = styled.div``;
 
-const Slink = styled.span`
+const Slink = styled(Link)`
   cursor: pointer;
   &:nth-child(2) {
     margin-left: 1%;
@@ -72,6 +74,7 @@ export const Login = ({ loginToken }) => {
 
   return (
     <Container>
+      <Topbar pageTitle={"로그인"} />
       <Form onSubmit={submit}>
         <Logo src="logo.png" />
         <Input
@@ -86,9 +89,7 @@ export const Login = ({ loginToken }) => {
         <Button type="submit">로그인</Button>
       </Form>
       <Column>
-        <Slink>아이디 찾기</Slink>
-        <Slink>비밀번호 찾기</Slink>
-        <Slink>회원가입</Slink>
+        <Slink to="../signup">회원가입</Slink>
       </Column>
     </Container>
   );
