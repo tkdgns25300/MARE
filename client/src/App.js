@@ -48,7 +48,6 @@ function App() {
   return (
     <div className="App">
       <Reset />
-      <div>퍼스트 프로젝트</div>
       <Routes>
         <Route path="login" element={<Login loginToken={setLoginToken} />} />
         <Route path="signup" element={<Signup />} />

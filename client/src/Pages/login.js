@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
+import { Topbar } from "../Components/topbar";
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 400px;
+`;
 const Logo = styled.img`
   width: 150px;
   height: 150px;
@@ -72,6 +75,7 @@ export const Login = ({ loginToken }) => {
 
   return (
     <Container>
+      <Topbar pageTitle={"로그인"}/>
       <Form onSubmit={submit}>
         <Logo src="logo.png" />
         <Input
@@ -86,9 +90,7 @@ export const Login = ({ loginToken }) => {
         <Button type="submit">로그인</Button>
       </Form>
       <Column>
-        <Slink>아이디 찾기</Slink>
-        <Slink>비밀번호 찾기</Slink>
-        <Slink>회원가입</Slink>
+        <Slink to="/signup">회원가입</Slink>
       </Column>
     </Container>
   );
