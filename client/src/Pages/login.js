@@ -95,6 +95,9 @@ export const Login = ({ loginToken }) => {
     if (ok) {
       setNewToken(ok.data.data.accessToken);
     }
+    if(ok.status === 200){
+      nav("/my_recipes")
+    }
   };
 
   const goToSignup = () => {
