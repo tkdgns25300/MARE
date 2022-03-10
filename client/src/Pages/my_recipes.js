@@ -8,11 +8,16 @@ const serverPath = process.env.REACT_APP_SERVER_PATH;
 
 const Container = styled.div`
   width: 400px;
-  display: grid;
-  place-items: center;
   min-height: 600px;
   background-color: #dfd5d2;
-`;
+  overflow: scroll;
+`
+const Message = styled.div`
+  display: grid;
+  width: 100%;
+  height: 600px;
+  place-items: center;
+`
 
 export const MyRecipes = ({ loginToken }) => {
   const [recipeList, setRecipeList] = useState([]);
@@ -34,7 +39,7 @@ export const MyRecipes = ({ loginToken }) => {
         return <Thumbnail key={el._id} data={el} />;
       });
     } else {
-      return <div>등록한 레시피가 없습니다.</div>;
+      return <Message>등록한 레시피가 없습니다.</Message>
     }
   };
 

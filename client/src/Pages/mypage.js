@@ -5,7 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { Topbar } from "../Components/topbar";
 import axios from "axios";
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: grid;
+  place-items: center;
+  height: 600px;
+`;
 
 const Slink = styled(Link)``;
 
@@ -45,7 +49,7 @@ export const Mypage = ({ loginToken }) => {
   const handleLogout = async () => {
     await axios
       .post(`${serverPath}/users/logout`, {}, headers)
-      .then((res) => {});
+      .then((res) => { });
     window.location.reload();
   };
 
@@ -55,16 +59,18 @@ export const Mypage = ({ loginToken }) => {
   }, []);
 
   return (
-    <Container>
-      <Topbar pageTitle={"마이페이지"} />
-      <Column>
-        <Content>닉네임: {user.nickname}</Content>
-      </Column>
-      <Content>나의 레시피: {recipe.length}개</Content>
-      <Column>
-        <Slink to="../userinfo">내계정관리</Slink>
-      </Column>
-      <Button onClick={handleLogout}>로그아웃</Button>
-    </Container>
+    <div>
+    <Topbar pageTitle={"마이페이지"} />
+      <Container>
+        <Column>
+          <Content>닉네임: {user.nickname}</Content>
+        </Column>
+        <Content>나의 레시피: {recipe.length}개</Content>
+        <Column>
+          <Slink to="../userinfo">내 계정 관리</Slink>
+        </Column>
+        <Button onClick={handleLogout}>로그아웃</Button>
+      </Container>
+    </div>
   );
 };

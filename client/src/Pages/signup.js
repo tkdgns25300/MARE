@@ -38,6 +38,7 @@ const StyledValidateBtn = styled.div`
   height: 33px;
   border: 1px solid gray;
   background-color: #fff;
+  cursor : pointer
 `
 
 const StyledSubmitBtn = styled.button`

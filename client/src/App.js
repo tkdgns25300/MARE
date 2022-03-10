@@ -14,6 +14,7 @@ import { Userinfo } from "./Pages/userinfo";
 import { ChangeNick } from "./Pages/changenick";
 import { Mypage } from "./Pages/mypage";
 import styled from "styled-components";
+import { EnterPassword } from "./Pages/enterpassword";
 
 // 각 페이지 별 path
 
@@ -94,9 +95,14 @@ function App() {
               element={<RecipeDetails loginToken={loginToken} />}
             />
             <Route
-              path="enterpassword"
+              path="enter_password"
               element={<EnterPassword loginToken={loginToken} />}
             />
+            <Route
+              path="password_edit"
+              element={<PasswordEdit loginToken={loginToken} />}
+            />
+
           </Routes>
           <Navbar />
         </MareApp>
