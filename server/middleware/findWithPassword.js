@@ -6,7 +6,7 @@ const findWithPassword = async (clue = {}, password) => {
     if (!userInfo) return false;
     else {
         const encryptedPassword = userInfo.password;
-        const isSame = await bcrypt.compareSync(password, encryptedPassword);
+        const isSame = bcrypt.compareSync(password, encryptedPassword);
         return isSame ? userInfo : false;
     }
 }
